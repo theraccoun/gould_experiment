@@ -6,19 +6,20 @@ import java.awt.event.KeyListener;
 /**
  * @Author: Steven MacCoun
  */
-public class Trial extends JPanel implements KeyListener{
+public class TrialPane extends JPanel implements KeyListener{
 
     private String sentence;
     private boolean isDisplaySentence;
 
-    public Trial(String sentence){
+    public TrialPane(String sentence){
 
         this.sentence = sentence;
         this.isDisplaySentence = false;
 
         setFocusable(true);
         setLayout(null);
-        setBackground(new Color(253, 253, 253));
+        setBackground(new Color(253, 139, 132));
+        setVisible(true);
         this.addKeyListener(this);
 
     }
@@ -42,8 +43,17 @@ public class Trial extends JPanel implements KeyListener{
 
     }
 
-    private void displaySentence(){
-        this.isDisplaySentence = true;
+    public void setSentence(String sentence){
+        this.sentence = sentence;
+    }
+
+    public String getSentence(){
+        return this.sentence;
+    }
+
+    public void displaySentence(boolean shouldDisplay){
+        this.isDisplaySentence = shouldDisplay;
+        repaint();
     }
 
     private Dimension getFontDimension(Graphics g, Font f, String s)
@@ -57,14 +67,15 @@ public class Trial extends JPanel implements KeyListener{
         return d;
     }
 
-
-
     @Override
     public void keyTyped(KeyEvent keyEvent) {
         if(keyEvent.getKeyChar() == 'h'){
             System.out.println("YOU hit h");
-            this.isDisplaySentence = true;
-            repaint();
+            displaySentence(true);
+
+        }
+        else if(keyEvent.getKeyChar() == 'a'){
+            Simulator.getInstance().runNextTrial();
         }
     }
 
@@ -75,9 +86,9 @@ public class Trial extends JPanel implements KeyListener{
 
     @Override
     public void keyReleased(KeyEvent keyEvent) {
-        if(keyEvent.getKeyChar() == 'h'){
-            this.isDisplaySentence = false;
-            repaint();
+        if(keyEvent.getKeyChar() == 'z'){
+            displaySentence(false);
         }
     }
+
 }
