@@ -1,7 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -15,9 +13,11 @@ public class Simulator extends JFrame{
     private static Simulator instance = null;
 
     private final String CSV_FILENAME = "words.csv";
-    private ArrayList<String> allTrials = new ArrayList<String>();
+    private ArrayList<Trial> allTrials = new ArrayList<Trial>();
+    private Trial curTrialPanel;
     private int curTrialNum;
-    private TrialPane curTrialPanel;
+    private Trial curTrial;
+    private JFrame frame;
 
     public static Simulator getInstance(){
         if(instance == null){
@@ -40,14 +40,12 @@ public class Simulator extends JFrame{
         Scanner scanner = new Scanner(isr);
 
         while(scanner.hasNextLine()){
-            allTrials.add(scanner.nextLine());
+            String sentence = scanner.nextLine();
+//            allTrials.add(new Trial(sentence));
         }
-
-        curTrialNum = 0;
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setExtendedState(Frame.MAXIMIZED_BOTH);
-//        setContentPane(new TrialPane(allTrials.get(curTrialNum)));
 
         this.pack();
         this.setVisible(true);
@@ -62,21 +60,27 @@ public class Simulator extends JFrame{
         System.out.println(curTrialNum);
 
         if(curTrialNum < allTrials.size()){
-            String sentence = allTrials.get(curTrialNum);
+            Trial curTrial = allTrials.get(curTrialNum);
+            String sentence = allTrials.get(curTrialNum).getSentence();
             System.out.println(sentence);
 //            getContentPane().
-//            TrialPane t = new TrialPane(sentence);
+            this.setContentPane(curTrial.getRenderer());
+            this.validate();
+//            getContentPane().validate();
+//            getContentPane().repaint();
+//            validate();
+//            repaint();
 //            t.validate();
 //            setContentPane(t);
 //            revalidate();
-            JPanel contentPane = (JPanel) this.getContentPane();
+//            JPanel contentPane = (JPanel) this.getContentPane();
 
-            contentPane.removeAll();
-            contentPane.add(new TrialPane(sentence));
-            contentPane.revalidate();
-            contentPane.repaint();
-            pack();
-//            curTrialPanel = new TrialPane(sentence);
+            //           contentPane.removeAll();
+//            contentPane.add(new Trial(sentence));
+//            contentPane.revalidate();
+//            contentPane.repaint();
+//            pack();
+//            curTrialPanel = new Trial(sentence);
 //            System.out.println("curSentPan: "  + curTrialPanel.getSentence());
 //            getContentPane().add(curTrialPanel);
 //            revalidate();

@@ -4,24 +4,22 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 /**
- * @Author: Steven MacCoun
+ * @author Steven MacCoun
  */
-public class TrialPane extends JPanel implements KeyListener{
+public class Renderer extends JPanel implements KeyListener {
 
     private String sentence;
     private boolean isDisplaySentence;
 
-    public TrialPane(String sentence){
+    public Renderer(String sentence){
 
         this.sentence = sentence;
-        this.isDisplaySentence = false;
 
         setFocusable(true);
         setLayout(null);
         setBackground(new Color(253, 139, 132));
         setVisible(true);
         this.addKeyListener(this);
-
     }
 
     public void paintComponent(Graphics g){
@@ -43,19 +41,6 @@ public class TrialPane extends JPanel implements KeyListener{
 
     }
 
-    public void setSentence(String sentence){
-        this.sentence = sentence;
-    }
-
-    public String getSentence(){
-        return this.sentence;
-    }
-
-    public void displaySentence(boolean shouldDisplay){
-        this.isDisplaySentence = shouldDisplay;
-        repaint();
-    }
-
     private Dimension getFontDimension(Graphics g, Font f, String s)
     {
         Graphics2D g2d = (Graphics2D) g;
@@ -67,12 +52,16 @@ public class TrialPane extends JPanel implements KeyListener{
         return d;
     }
 
+    public void displaySentence(boolean shouldDisplay){
+        this.isDisplaySentence = shouldDisplay;
+        repaint();
+    }
+
     @Override
     public void keyTyped(KeyEvent keyEvent) {
         if(keyEvent.getKeyChar() == 'h'){
             System.out.println("YOU hit h");
             displaySentence(true);
-
         }
         else if(keyEvent.getKeyChar() == 'a'){
             Simulator.getInstance().runNextTrial();
@@ -90,5 +79,4 @@ public class TrialPane extends JPanel implements KeyListener{
             displaySentence(false);
         }
     }
-
 }
