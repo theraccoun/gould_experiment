@@ -1,12 +1,23 @@
+import javax.swing.*;
+import java.awt.*;
+
 /**
  *@author Steven MacCoun
  */
 public class Run {
 
     public static void main(String[] args){
-        System.out.println("HI THERE DUDE!");
-//        Simulator.getInstance().initialize();
-        SimpleSim.getInstance().initialize();
-//        s.runTrial(new Trial("HI THERE MAN!"));
+        EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                } catch (Exception ex){
+                    ex.printStackTrace();
+                }
+
+                Simulator.getInstance().initialize();
+            }
+        });
     }
 }

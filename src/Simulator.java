@@ -14,10 +14,8 @@ public class Simulator extends JFrame{
 
     private final String CSV_FILENAME = "words.csv";
     private ArrayList<Trial> allTrials = new ArrayList<Trial>();
-    private Trial curTrialPanel;
     private int curTrialNum;
-    private Trial curTrial;
-    private JFrame frame;
+    private ArrayList<String> allLines = new ArrayList<String>();
 
     public static Simulator getInstance(){
         if(instance == null){
@@ -40,8 +38,7 @@ public class Simulator extends JFrame{
         Scanner scanner = new Scanner(isr);
 
         while(scanner.hasNextLine()){
-            String sentence = scanner.nextLine();
-//            allTrials.add(new Trial(sentence));
+            allLines.add(scanner.nextLine());
         }
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -59,33 +56,14 @@ public class Simulator extends JFrame{
 
         System.out.println(curTrialNum);
 
-        if(curTrialNum < allTrials.size()){
-            Trial curTrial = allTrials.get(curTrialNum);
-            String sentence = allTrials.get(curTrialNum).getSentence();
-            System.out.println(sentence);
-//            getContentPane().
-            this.setContentPane(curTrial.getRenderer());
-            this.validate();
-//            getContentPane().validate();
-//            getContentPane().repaint();
-//            validate();
-//            repaint();
-//            t.validate();
-//            setContentPane(t);
-//            revalidate();
-//            JPanel contentPane = (JPanel) this.getContentPane();
+        if(curTrialNum < allLines.size()){
+            String sentence = allLines.get(curTrialNum);
+            Trial curTrial = new Trial(1, sentence);
+            getContentPane().removeAll();
+            add(curTrial.getRenderer());
+            curTrial.getRenderer().requestFocusInWindow();
+            validate();
 
-            //           contentPane.removeAll();
-//            contentPane.add(new Trial(sentence));
-//            contentPane.revalidate();
-//            contentPane.repaint();
-//            pack();
-//            curTrialPanel = new Trial(sentence);
-//            System.out.println("curSentPan: "  + curTrialPanel.getSentence());
-//            getContentPane().add(curTrialPanel);
-//            revalidate();
-//            repaint();
-//            pack();
         }
     }
 

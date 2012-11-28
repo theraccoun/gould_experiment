@@ -1,12 +1,13 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 /**
  * @author Steven MacCoun
  */
-public class Renderer extends JPanel implements KeyListener {
+public class Renderer extends JPanel{
 
     private String sentence;
     private boolean isDisplaySentence;
@@ -18,8 +19,43 @@ public class Renderer extends JPanel implements KeyListener {
         setFocusable(true);
         setLayout(null);
         setBackground(new Color(253, 139, 132));
+        setLayout(null);
         setVisible(true);
-        this.addKeyListener(this);
+        requestFocusInWindow();
+
+        setKeyBindings();
+
+    }
+
+    private void setKeyBindings(){
+        InputMap im = getInputMap(WHEN_IN_FOCUSED_WINDOW);
+        ActionMap am = getActionMap();
+
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_A, 0), "A");
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_H, 0, true), "released_h");
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_H, 0, false), "pressed_h");
+        am.put("released_h", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                displaySentence(false);
+                System.out.println("YOU just released h!");
+            }
+        });
+        am.put("pressed_h", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                displaySentence(true);
+                System.out.println("YOU just released h!");
+            }
+        });
+        am.put("A", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("a");
+                System.out.println("KEY: " + Thread.currentThread().getName());
+                Simulator.getInstance().runNextTrial();
+            }
+        });
     }
 
     public void paintComponent(Graphics g){
@@ -55,28 +91,5 @@ public class Renderer extends JPanel implements KeyListener {
     public void displaySentence(boolean shouldDisplay){
         this.isDisplaySentence = shouldDisplay;
         repaint();
-    }
-
-    @Override
-    public void keyTyped(KeyEvent keyEvent) {
-        if(keyEvent.getKeyChar() == 'h'){
-            System.out.println("YOU hit h");
-            displaySentence(true);
-        }
-        else if(keyEvent.getKeyChar() == 'a'){
-            Simulator.getInstance().runNextTrial();
-        }
-    }
-
-    @Override
-    public void keyPressed(KeyEvent keyEvent) {
-
-    }
-
-    @Override
-    public void keyReleased(KeyEvent keyEvent) {
-        if(keyEvent.getKeyChar() == 'z'){
-            displaySentence(false);
-        }
     }
 }
