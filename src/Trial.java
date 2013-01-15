@@ -8,24 +8,28 @@ import java.awt.event.KeyListener;
  */
 public class Trial {
 
+    private String subjectName;
     private JPanel renderer;
-    private Integer trialNum;
     private String sentence;
-    private boolean isDisplaySentence;
+    private Character keyPressed;
+    private double reactionTime;
 
-    public Trial(Integer trialNum, String sentence){
+    public Trial(String subjectName, String sentence){
 
-        this.trialNum = trialNum;
         this.sentence = sentence;
-        this.isDisplaySentence = false;
 
-        renderer = new Renderer(sentence);
+        renderer = new Renderer(this);
+    }
+
+    public void registerReaction(Character keyPressed, double reactTime){
+
+         this.keyPressed = keyPressed;
+         this.reactionTime = reactTime;
     }
 
 
-
-    public void setSentence(String sentence){
-        this.sentence = sentence;
+    public void runTrial(){
+        this.renderer.requestFocusInWindow();
     }
 
     public String getSentence(){

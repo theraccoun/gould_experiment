@@ -9,12 +9,14 @@ import java.awt.event.KeyListener;
  */
 public class Renderer extends JPanel{
 
+    private Trial trial;
     private String sentence;
     private boolean isDisplaySentence;
+    private double releasedHTime;
 
-    public Renderer(String sentence){
+    public Renderer(Trial t){
 
-        this.sentence = sentence;
+        this.sentence = t.getSentence();
 
         setFocusable(true);
         setLayout(null);
@@ -38,6 +40,7 @@ public class Renderer extends JPanel{
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 displaySentence(false);
+                releasedHTime = System.currentTimeMillis();
                 System.out.println("YOU just released h!");
             }
         });
@@ -52,8 +55,9 @@ public class Renderer extends JPanel{
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("a");
-                System.out.println("KEY: " + Thread.currentThread().getName());
-                Simulator.getInstance().runNextTrial();
+                double reactTime = System.currentTimeMillis() - releasedHTime;
+                System.out.println("REACTION TIME: " + reactTime);
+                Simulator.getInstance().executeNextLine();
             }
         });
     }
