@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -56,8 +55,12 @@ public class Simulator extends JFrame{
     }
 
     public void executeNextLine(){
-
         curLine++;
+        executeCurLine();
+    }
+
+    public void executeCurLine(){
+
         if(curLine < allLines.size()){
 
             String[] lineSeg = allLines.get(curLine).split(",");
@@ -65,16 +68,17 @@ public class Simulator extends JFrame{
 
             String eType = lineSeg[0];
 
-            if(eType.matches("P[0-9]T[0-9]+")){
+            if(eType.matches("P[0-9]+T[0-9]+")){
 
             }
-            else if(eType.matches("B[0-9]T[0-9]+")){
+            else if(eType.matches("B[0-9]+T[0-9]+")){
                 curTrialNum++;
                 Trial t = new Trial("BOB", lineSeg[1]);
                 runTrial(t);
             }
             else if(eType.matches("I[0-9]")){
-                InstructionPanel ip = new InstructionPanel();
+                InstructionPanel ip = new InstructionPanel(lineSeg[1]);
+                runInstruction(ip);
             }
         }
         else{
@@ -85,19 +89,24 @@ public class Simulator extends JFrame{
 
     private void runExperiment(){
 
-        curLine = 10;
-        executeNextLine();
+        curLine = 0;
+        executeCurLine();
 
     }
 
     public void runTrial(Trial t){
-
-
         getContentPane().removeAll();
         add(t.getRenderer());
         t.runTrial();
         validate();
 
+    }
+
+    private void runInstruction(InstructionPanel ip){
+        getContentPane().removeAll();
+        add(ip);
+        ip.requestFocusInWindow();
+        validate();
     }
 
 
