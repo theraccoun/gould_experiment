@@ -17,14 +17,7 @@ public class Trial {
     public Trial(String subjectName, String sentence){
 
         this.sentence = sentence;
-
         renderer = new Renderer(this);
-    }
-
-    public void registerReaction(Character keyPressed, double reactTime){
-
-         this.keyPressed = keyPressed;
-         this.reactionTime = reactTime;
     }
 
 

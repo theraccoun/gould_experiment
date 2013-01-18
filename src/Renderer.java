@@ -8,7 +8,6 @@ import java.awt.event.KeyEvent;
  */
 public class Renderer extends JPanel{
 
-    private Trial trial;
     private String sentence;
     private boolean isDisplaySentence;
     private double releasedHTime;

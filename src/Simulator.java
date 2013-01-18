@@ -1,5 +1,9 @@
+import au.com.bytecode.opencsv.CSVReader;
+
 import javax.swing.*;
 import java.awt.*;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -15,8 +19,7 @@ public class Simulator extends JFrame{
     private final String CSV_FILENAME = "experiment_layout_1.csv";
     private ArrayList<Trial> allTrials = new ArrayList<Trial>();
     private int curLine;
-    private int curTrialNum;
-    private ArrayList<String> allLines = new ArrayList<String>();
+    private ArrayList<String[]> allLines = new ArrayList<String[]>();
 
     public static Simulator getInstance(){
         if(instance == null){
@@ -37,12 +40,20 @@ public class Simulator extends JFrame{
         }
 
         InputStreamReader isr = new InputStreamReader(inputStream);
-        Scanner scanner = new Scanner(isr);
+        CSVReader reader = new CSVReader(isr);
 
-        while(scanner.hasNextLine()){
-            String line = scanner.nextLine();
-            System.out.println(line);
-            allLines.add(scanner.nextLine());
+        try {
+            String [] nextLine;
+            while ((nextLine = reader.readNext()) != null) {
+                for(String c : nextLine){
+                    System.out.print(c + ",");
+                }
+                System.out.println(" ");
+                allLines.add(nextLine);
+            }
+        } catch (IOException e) {
+            System.out.println("Could not read line in file");
+            e.printStackTrace();
         }
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -63,21 +74,19 @@ public class Simulator extends JFrame{
 
         if(curLine < allLines.size()){
 
-            String[] lineSeg = allLines.get(curLine).split(",");
-            System.out.println("FIRST: " + lineSeg[0]);
-
-            String eType = lineSeg[0];
+            String[] curRow = allLines.get(curLine);
+            String eType = curRow[0];
+            System.out.println("eType: " + eType);
 
             if(eType.matches("P[0-9]+T[0-9]+")){
 
             }
             else if(eType.matches("B[0-9]+T[0-9]+")){
-                curTrialNum++;
-                Trial t = new Trial("BOB", lineSeg[1]);
+                Trial t = new Trial("BOB", curRow[1]);
                 runTrial(t);
             }
             else if(eType.matches("I[0-9]")){
-                InstructionPanel ip = new InstructionPanel(lineSeg[1]);
+                InstructionPanel ip = new InstructionPanel(curRow[1]);
                 runInstruction(ip);
             }
         }
@@ -88,8 +97,7 @@ public class Simulator extends JFrame{
     }
 
     private void runExperiment(){
-
-        curLine = 0;
+        curLine = 1;
         executeCurLine();
 
     }
