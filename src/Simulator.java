@@ -2,10 +2,7 @@ import au.com.bytecode.opencsv.CSVReader;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -17,7 +14,10 @@ public class Simulator extends JFrame{
     private static Simulator instance = null;
 
     private final String CSV_FILENAME = "experiment_layout_1.csv";
-    private ArrayList<Trial> allTrials = new ArrayList<Trial>();
+    private String subjectName;
+    private File subjectFile;
+    private static final String SUBJECT_DIRECTORY = "Subjects";
+    private File outFile;
     private int curLine;
     private ArrayList<String[]> allLines = new ArrayList<String[]>();
 
@@ -29,7 +29,10 @@ public class Simulator extends JFrame{
         return instance;
     }
 
-    private Simulator(){}
+    private Simulator(){
+        this.subjectName = "Bob";
+        outFile = new File("/tmp/" + subjectName);
+    }
 
     public void initialize(){
 
@@ -78,8 +81,12 @@ public class Simulator extends JFrame{
             String eType = curRow[0];
             System.out.println("eType: " + eType);
 
-            if(eType.matches("P[0-9]+T[0-9]+")){
+//            MetaCollector metaCollector = new MetaCollector("Name");
+//            add(metaCollector);
 
+            if(eType.matches("P[0-9]+T[0-9]+")){
+                Trial t = new Trial("Prac", curRow[1]);
+                runTrial(t);
             }
             else if(eType.matches("B[0-9]+T[0-9]+")){
                 Trial t = new Trial("BOB", curRow[1]);
@@ -88,6 +95,11 @@ public class Simulator extends JFrame{
             else if(eType.matches("I[0-9]")){
                 InstructionPanel ip = new InstructionPanel(curRow[1]);
                 runInstruction(ip);
+            }
+            else if(eType.matches("meta")){
+                MetaCollector mc = new MetaCollector();
+                add(mc);
+                validate();
             }
         }
         else{
@@ -110,11 +122,29 @@ public class Simulator extends JFrame{
 
     }
 
+    public void setStudentInfo(String name){
+        File subjectsDir = new File(SUBJECT_DIRECTORY);
+        if(!subjectsDir.isDirectory())
+            subjectsDir.mkdir();
+
+        this.subjectName = name;
+        this.subjectFile = new File(SUBJECT_DIRECTORY + File.separator + this.subjectName);
+        boolean success = (this.subjectFile).mkdirs();
+        if (!success) {
+            System.out.println("Failed to create directory: ./" + subjectName);
+        }
+    }
+
     private void runInstruction(InstructionPanel ip){
         getContentPane().removeAll();
         add(ip);
         ip.requestFocusInWindow();
         validate();
+    }
+
+    public void collectTrialAndWriteToFile(Trial t)
+    {
+
     }
 
 
