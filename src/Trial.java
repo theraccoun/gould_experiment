@@ -1,37 +1,31 @@
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 /**
  * @Author: Steven MacCoun
  */
 public class Trial {
 
-    private String subjectName;
-    private JPanel renderer;
-    private String sentence;
-    private Character keyPressed;
+    private String trialName;
     private double reactionTime;
+    private String keyPressed;
 
-    public Trial(String subjectName, String sentence){
+    public Trial(String trialName, double reactionTime, String keyPressed){
 
-        this.sentence = sentence;
-        renderer = new Renderer(this);
+        this.trialName = trialName;
+        this.reactionTime = reactionTime;
+        this.keyPressed = keyPressed;
     }
 
-
-    public void runTrial(){
-        this.renderer.requestFocusInWindow();
+    public double getReactionTime(){
+        return this.reactionTime;
     }
 
-    public String getSentence(){
-        return this.sentence;
+    public String getTrialName(){
+        return this.trialName;
     }
 
-
-    public JPanel getRenderer(){
-        return renderer;
+    public String getKeyPressed(){
+        return  keyPressed;
     }
 
 

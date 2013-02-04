@@ -1,4 +1,5 @@
 import au.com.bytecode.opencsv.CSVReader;
+import au.com.bytecode.opencsv.CSVWriter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,8 +18,8 @@ public class Simulator extends JFrame{
     private String subjectName;
     private File subjectFile;
     private static final String SUBJECT_DIRECTORY = "Subjects";
-    private File outFile;
     private int curLine;
+    private CSVWriter resultsWriter;
     private ArrayList<String[]> allLines = new ArrayList<String[]>();
 
     public static Simulator getInstance(){
@@ -30,8 +31,6 @@ public class Simulator extends JFrame{
     }
 
     private Simulator(){
-        this.subjectName = "Bob";
-        outFile = new File("/tmp/" + subjectName);
     }
 
     public void initialize(){
@@ -84,13 +83,9 @@ public class Simulator extends JFrame{
 //            MetaCollector metaCollector = new MetaCollector("Name");
 //            add(metaCollector);
 
-            if(eType.matches("P[0-9]+T[0-9]+")){
-                Trial t = new Trial("Prac", curRow[1]);
-                runTrial(t);
-            }
-            else if(eType.matches("B[0-9]+T[0-9]+")){
-                Trial t = new Trial("BOB", curRow[1]);
-                runTrial(t);
+            if(eType.matches("[PB][0-9]+T[0-9]+")){
+                TrialRenderer tr = new TrialRenderer(curRow[0], curRow[1]);
+                runTrial(tr);
             }
             else if(eType.matches("I[0-9]")){
                 InstructionPanel ip = new InstructionPanel(curRow[1]);
@@ -114,10 +109,10 @@ public class Simulator extends JFrame{
 
     }
 
-    public void runTrial(Trial t){
+    public void runTrial(TrialRenderer trenderer){
         getContentPane().removeAll();
-        add(t.getRenderer());
-        t.runTrial();
+        add(trenderer);
+        trenderer.requestFocusInWindow();
         validate();
 
     }
@@ -133,6 +128,14 @@ public class Simulator extends JFrame{
         if (!success) {
             System.out.println("Failed to create directory: ./" + subjectName);
         }
+        else{
+            try {
+                String fileName = this.subjectFile + File.separator + this.subjectName + "_results.csv";
+                resultsWriter = new CSVWriter(new FileWriter(fileName), ',');
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void runInstruction(InstructionPanel ip){
@@ -142,9 +145,19 @@ public class Simulator extends JFrame{
         validate();
     }
 
-    public void collectTrialAndWriteToFile(Trial t)
-    {
+    public void collectTrialAndWriteToFile(Trial t){
 
+        try {
+            String trialInfo = (t.getTrialName() + ',' + t.getReactionTime() + ',' + t.getKeyPressed());
+            String[] commaDelimTrialInfo = trialInfo.split(",");
+            System.out.println("WRITING: " + commaDelimTrialInfo);
+            resultsWriter.writeNext(commaDelimTrialInfo);
+            resultsWriter.flush();
+            executeNextLine();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

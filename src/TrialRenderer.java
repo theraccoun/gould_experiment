@@ -6,19 +6,22 @@ import java.awt.event.KeyEvent;
 /**
  * @author Steven MacCoun
  */
-public class Renderer extends JPanel{
+public class TrialRenderer extends JPanel{
 
     private String sentence;
+    private String trialName;
     private boolean isDisplaySentence;
     private double releasedHTime;
+    private JButton nextButton = new JButton("Next");
+    private JButton prevButton = new JButton("Prev");
 
-    public Renderer(Trial t){
+    public TrialRenderer(String trialName, String sentence){
 
-        this.sentence = t.getSentence();
+        this.sentence = sentence;
+        this.trialName = trialName;
 
         setFocusable(true);
         setLayout(null);
-        setBackground(new Color(253, 139, 132));
         setLayout(null);
         setVisible(true);
         requestFocusInWindow();
@@ -31,10 +34,11 @@ public class Renderer extends JPanel{
         InputMap im = getInputMap(WHEN_IN_FOCUSED_WINDOW);
         ActionMap am = getActionMap();
 
-        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_A, 0), "A");
-        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_H, 0, true), "released_h");
-        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_H, 0, false), "pressed_h");
-        am.put("released_h", new AbstractAction() {
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_8, 0), "8");
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_Q, 0), "Q");
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_P, 0, true), "released_p");
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_P, 0, false), "pressed_p");
+        am.put("released_p", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 displaySentence(false);
@@ -42,22 +46,36 @@ public class Renderer extends JPanel{
                 System.out.println("YOU just released h!");
             }
         });
-        am.put("pressed_h", new AbstractAction() {
+        am.put("pressed_p", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 displaySentence(true);
                 System.out.println("YOU just released h!");
             }
         });
-        am.put("A", new AbstractAction() {
+        am.put("8", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("a");
-                double reactTime = System.currentTimeMillis() - releasedHTime;
+                double reactTime = (double)System.currentTimeMillis() - releasedHTime;
                 System.out.println("REACTION TIME: " + reactTime);
-                Simulator.getInstance().executeNextLine();
+                writeTrialInfoToFile(reactTime, "1");
             }
         });
+        am.put("Q", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("a");
+                double reactTime = (double)System.currentTimeMillis() - releasedHTime;
+                System.out.println("REACTION TIME: " + reactTime);
+                writeTrialInfoToFile(reactTime, "0");
+            }
+        });
+    }
+
+    private void writeTrialInfoToFile(double reactionTime, String keyPressed){
+        Trial t = new Trial(this.trialName, reactionTime, keyPressed);
+        Simulator.getInstance().collectTrialAndWriteToFile(t);
     }
 
     public void paintComponent(Graphics g){
@@ -67,14 +85,18 @@ public class Renderer extends JPanel{
 
             Graphics2D g2d = (Graphics2D) g;
 
+            int panelWidth = this.getWidth();
+            int panelHeight = this.getHeight();
+
             int fSize = (int) (this.getHeight()/8.0);
             Font exp = new Font("Serif", Font.BOLD, fSize);
             Dimension expSize = getFontDimension(g, exp, sentence);
             g2d.setFont(exp);
             g2d.setPaint(Color.BLACK);
 
-            g2d.drawString(sentence, (int)(this.getWidth()/2) - (int)(expSize.getWidth()/2),
-                    (int)(this.getHeight()/2) - (int)(expSize.getHeight()/2));
+            g2d.drawString(sentence, (panelWidth/2) - (int)(expSize.getWidth()/2),
+                    (panelHeight/2) - (int)(expSize.getHeight()/2));
+
         }
 
     }
