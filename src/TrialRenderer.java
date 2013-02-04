@@ -12,6 +12,7 @@ public class TrialRenderer extends JPanel{
     private String trialName;
     private boolean isDisplaySentence;
     private double releasedHTime;
+    private boolean hasPressedP;
     private JButton nextButton = new JButton("Next");
     private JButton prevButton = new JButton("Prev");
 
@@ -19,6 +20,7 @@ public class TrialRenderer extends JPanel{
 
         this.sentence = sentence;
         this.trialName = trialName;
+        this.hasPressedP = false;
 
         setFocusable(true);
         setLayout(null);
@@ -41,34 +43,37 @@ public class TrialRenderer extends JPanel{
         am.put("released_p", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                displaySentence(false);
-                releasedHTime = System.currentTimeMillis();
-                System.out.println("YOU just released h!");
+                if(!hasPressedP){
+                    hasPressedP = true;
+                    displaySentence(false);
+                    releasedHTime = System.currentTimeMillis();
+                }
             }
         });
         am.put("pressed_p", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                displaySentence(true);
-                System.out.println("YOU just released h!");
+                if(!hasPressedP)
+                    displaySentence(true);
             }
         });
         am.put("8", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("a");
-                double reactTime = (double)System.currentTimeMillis() - releasedHTime;
-                System.out.println("REACTION TIME: " + reactTime);
-                writeTrialInfoToFile(reactTime, "1");
+                if(hasPressedP){
+                    double reactTime = (double)System.currentTimeMillis() - releasedHTime;
+                    writeTrialInfoToFile(reactTime, "1");
+                }
+
             }
         });
         am.put("Q", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("a");
-                double reactTime = (double)System.currentTimeMillis() - releasedHTime;
-                System.out.println("REACTION TIME: " + reactTime);
-                writeTrialInfoToFile(reactTime, "0");
+                if(hasPressedP){
+                    double reactTime = (double)System.currentTimeMillis() - releasedHTime;
+                    writeTrialInfoToFile(reactTime, "0");
+                }
             }
         });
     }
