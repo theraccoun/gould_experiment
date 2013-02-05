@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Rectangle2D;
 
@@ -12,10 +13,48 @@ public class InstructionPanel extends JPanel {
     private String instructionText;
     private Font instructionFont;
     private static final double BORDER_INSET = 0.2;
+    private JButton nextButton;
+    private JButton prevButton;
+
+    private float borderThickness;
+
+    private Dimension padD;
+    private Dimension panelD;
+
+    private double panelP1X;
+    private double panelP1Y;
+    private double panelP2X;
+    private double panelP2Y;
+
+
 
     public InstructionPanel(String text ) {
 
+        this.setLayout(null);
+
         this.instructionText = text;
+
+        this.nextButton = new JButton("Next");
+        this.nextButton.setVisible(true);
+        this.nextButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                Simulator.getInstance().executeNextLine();
+            }
+        });
+        this.add(nextButton);
+
+
+        this.prevButton = new JButton("Prev");
+        this.prevButton.setVisible(true);
+        this.prevButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                Simulator.getInstance().executePrevLine();
+            }
+        });
+        this.add(prevButton);
+
         requestFocusInWindow();
         setKeyBindings();
     }
@@ -29,7 +68,6 @@ public class InstructionPanel extends JPanel {
         am.put("N", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("YOU HIT N!");
                 Simulator.getInstance().executeNextLine();
             }
         });
@@ -40,20 +78,19 @@ public class InstructionPanel extends JPanel {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         requestFocus();
-        float sWidth = this.getWidth();
-        float borderThickness = sWidth/20.0f;
-        Dimension panelD = this.getSize();
-        Dimension padD = new Dimension((int) (0.6*panelD.width),
+        borderThickness = this.getWidth()/20.0f;
+        panelD = this.getSize();
+        padD = new Dimension((int) (0.6*panelD.width),
                 (int) (0.6*panelD.height));
 
         // Set the points of the border
         Point panelP = new Point((int)(this.getWidth() * BORDER_INSET), (int)(this.getHeight()* BORDER_INSET));
-        double panelP1 = panelP.getX()- borderThickness/2;
-        double panelP2 = panelP.getY()-borderThickness/2;
-        double panelP3 = padD.getWidth()+borderThickness;
-        double panelP4 = padD.getHeight()+borderThickness;
+        panelP1X = panelP.getX()- borderThickness/2;
+        panelP1Y = panelP.getY()-borderThickness/2;
+        panelP2X = padD.getWidth()+borderThickness;
+        panelP2Y = padD.getHeight()+borderThickness;
 
-        Rectangle2D border = new Rectangle.Double(panelP1, panelP2, panelP3, panelP4);
+        Rectangle2D border = new Rectangle.Double(panelP1X, panelP1Y, panelP2X, panelP2Y);
 
         g2d.setPaint(Color.BLACK);
         Stroke bStroke = new BasicStroke(borderThickness, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
@@ -78,7 +115,20 @@ public class InstructionPanel extends JPanel {
         g2d.drawString(instructionText, centerPadX - (int)(textSize.getWidth()/2),
                 (int) (panelP.getY() + padD.getHeight()/2) - instructionFont.getSize());
 
+        setButtonPositions();
+    }
 
+    private void setButtonPositions(){
+
+        int buttonWidth = (int)(padD.getWidth()*0.2);
+        int buttonHeight = (int)(padD.getHeight()*0.1);
+        int buttonY = (int)(panelP2Y + borderThickness/2) - 10;
+
+        int nButton1X = (int)(panelP2X) - 10;
+        nextButton.setBounds(nButton1X, buttonY, buttonWidth, buttonHeight);
+
+        int pButton1X = (int)(panelP1X + borderThickness/2) + 10;
+        prevButton.setBounds(pButton1X, buttonY, buttonWidth, buttonHeight);
     }
 
     private Dimension getFontDimension(Graphics g, Font f, String s)

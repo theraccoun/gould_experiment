@@ -72,6 +72,11 @@ public class Simulator extends JFrame{
         executeCurLine();
     }
 
+    public void executePrevLine(){
+        curLine--;
+        executeCurLine();
+    }
+
     public void executeCurLine(){
 
         if(curLine < allLines.size()){
