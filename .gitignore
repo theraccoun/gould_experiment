@@ -1,4 +1,5 @@
 color/
 .idea/
-out/
+out/production/
+out/tests/
 Subjects/
