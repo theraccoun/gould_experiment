@@ -3,3 +3,4 @@ color/
 out/production/
 out/tests/
 Subjects/
+*.csv

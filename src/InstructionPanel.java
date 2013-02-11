@@ -22,6 +22,7 @@ public class InstructionPanel extends InfoPanel {
 
         this.instructionText = "<html><p>" + text + "</p><html>";
         this.instructionLabel = new JLabel(instructionText);
+        this.instructionLabel.setHorizontalAlignment( SwingConstants.CENTER );
         this.add(instructionLabel);
 
         this.nextButton = new JButton("Next");
