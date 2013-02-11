@@ -22,7 +22,7 @@ public class MetaCollector extends InfoPanel{
         this.continueButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                String subjectName = firstNameField.getName() + "_" + lastNameField.getName();
+                String subjectName = firstNameField.getText() + "_" + lastNameField.getText();
                 Simulator.getInstance().setStudentInfo(subjectName);
                 Simulator.getInstance().executeNextLine();
             }

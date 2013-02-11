@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 public class InstructionPanel extends InfoPanel {
 
     private String instructionText;
+    private JLabel instructionLabel;
     private Font instructionFont;
     private JButton nextButton;
     private JButton prevButton;
@@ -19,7 +20,9 @@ public class InstructionPanel extends InfoPanel {
 
         this.setLayout(null);
 
-        this.instructionText = text;
+        this.instructionText = "<html><p>" + text + "</p><html>";
+        this.instructionLabel = new JLabel(instructionText);
+        this.add(instructionLabel);
 
         this.nextButton = new JButton("Next");
         this.nextButton.setVisible(true);
@@ -67,17 +70,24 @@ public class InstructionPanel extends InfoPanel {
 
         int fSize = (int) (padD.getHeight()/12.5);
         this.instructionFont = new Font("Serif", Font.BOLD | Font.ITALIC, fSize);
-        Dimension textSize = getFontDimension(g, instructionFont, instructionText);
         g2d.setFont(instructionFont);
         g2d.setPaint(Color.BLACK);
-        int centerPadX = (int)((2.0*panelP.getX() + padD.getWidth())/2.0);
 
-        g2d.drawString(instructionText, centerPadX - (int)(textSize.getWidth()/2),
-                (int) (panelP.getY() + padD.getHeight()/2) - instructionFont.getSize());
+        instructionLabel.setFont(instructionFont);
+        int textX = (int)(panelP1X + borderThickness);
+        int textY = this.getHeight()/4;
+        int textWidth = (int)(padD.getWidth() - borderThickness);
+        int textHeight;
+        // Heights less than twenty cause matrix inversion issues
+        if(panelD.getHeight() > 20)
+            textHeight = (int)(panelD.getHeight()/2.0);
+        else
+            textHeight = 30;
+
+        instructionLabel.setBounds(textX, textY, textWidth, textHeight);
 
         setButtonPositions();
     }
-
 
 
     private void setButtonPositions(){
@@ -91,17 +101,6 @@ public class InstructionPanel extends InfoPanel {
 
         int pButton1X = (int)(panelP1X + borderThickness/2) + 10;
         prevButton.setBounds(pButton1X, buttonY, buttonWidth, buttonHeight);
-    }
-
-    private Dimension getFontDimension(Graphics g, Font f, String s)
-    {
-        Graphics2D g2d = (Graphics2D) g;
-        FontMetrics metrics = g2d.getFontMetrics(f);
-        int hgt = metrics.getHeight();
-        int adv = metrics.stringWidth(s);
-
-        Dimension d =  new Dimension(adv+2, hgt+2);
-        return d;
     }
 
 }

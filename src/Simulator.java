@@ -83,10 +83,6 @@ public class Simulator extends JFrame{
 
             String[] curRow = allLines.get(curLine);
             String eType = curRow[0];
-            System.out.println("eType: " + eType);
-
-//            MetaCollector metaCollector = new MetaCollector("Name");
-//            add(metaCollector);
 
             if(eType.matches("[PB][0-9]+T[0-9]+")){
                 TrialRenderer tr = new TrialRenderer(curRow[0], curRow[1]);
@@ -132,6 +128,7 @@ public class Simulator extends JFrame{
         boolean success = (this.subjectFile).mkdirs();
         if (!success) {
             System.out.println("Failed to create directory: ./" + subjectName);
+            System.exit(0);
         }
         else{
             try {
@@ -164,6 +161,5 @@ public class Simulator extends JFrame{
             e.printStackTrace();
         }
     }
-
 
 }

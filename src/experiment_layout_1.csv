@@ -1,15 +1,15 @@
 Slide Name,Slide Text,Type,Direction,Features,Expected Response,Expected Effect,Syllables,Verb,Object
 meta,,,,,,,,,
 I1,First please speak with your instructor about stuff okay then and make sure you understand everything,,,,,,,,
-I2,<instruction slide two>,,,,,,,,
-I3,<instruction slide three>,,,,,,,,
-I4,<instruction slide four>,,,,,,,,
+I2,Instruction slide two,,,,,,,,
+I3,instruction slide three,,,,,,,,
+I4,Begin with these practice trials,,,,,,,,
 P1T1,Jorge está comprando la comida.,Practice,,,,,,,
 P1T2,Berto pidío la cerveza.,Practice,,,,,,,
 P1T3,Sara nadaba el balón.,Practice,,,,,,,
 P1T4,Marco está cocinando el huevo.,Practice,,,,,,,
 P1T5,Coco mastica la almohada.,Practice,,,,,,,
-I5,<instruction slide five>,,,,,,,,
+I5,Now for the real thing!,,,,,,,,
 B1T1,Elsa comió la naranja.,Critical,Toward,Preterite,Away/Green,Interference,8,Comer,Naranja
 B1T2,Berto está lanzando el balón.,Critical,Away,PresProg,Away/Green,Facilitation,9,Lanzar,Balón
 B1T3,Inés hervirá la puerta.,Filler,None,Mfuture_F,Close/Red,Neither,8,,
@@ -50,7 +50,7 @@ B1T37,César está leyendo la naranja.,Filler,None,PresProg_F,Close/Red,Neither,
 B1T38,Parece que Elsa esté comprando la naranja.,Filler,None,SubSubj_F,Away/Green,Neither,15,,
 B1T39,Marco recoge la almohada.,Critical,Toward,Present,Away/Green,Interference,10,Recoger,Almohada
 B1T40,Elsa está tirando la naranja.,Critical,Away,PresProg,Away/Green,Facilitation,11,,
-I6,<instruction slide six>,,,,,,,,
+I6,Take a break...you deserve it!,,,,,,,,
 B2T1,Pilar va a instalar la puerta.,Filler,None,Pfuture_F,Away/Green,Neither,10,,
 B2T2,Berto atrapaba el balón.,Critical,Toward,Imperfect,Away/Green,Interference,9,Atrapar,Balón
 B2T3,Marco va a arrojar la pelota.,Critical,Away,Mfuture,Away/Green,Facilitation,11,Arrojar,Pelota
@@ -139,7 +139,7 @@ B3T37,Marta va a tirar la naranja.,Critical,Away,Pfuture,Close/Green,Interferenc
 B3T38,José pateaba la pelota.,Filler,None,Imperfect_F,Close/Green,Neither,10,,
 B3T39,Parece que Victor está atrapando el balón.,Critical,Toward,SubIndic,Close/Green,Facilitation,15,Atrapar,Balón
 B3T40,Rosa compra la naranja.,Filler,None,Present_F,Close/Green,Neither,8,,
-I10,<instruction slide ten>,,,,,,,,
+I10,Take another break! Only 500 more!,,,,,,,,
 B4T1,Pablo tomó la pelota.,Critical,Toward,Preterite,Close/Green,Facilitation,8,Tomar,Pelota
 B4T2,Luis cosía la almohada.,Filler,None,Imperfect_F,Close/Green,Neither,10,,
 B4T3,Hugo golpeará la almohada.,Critical,Away,Mfuture,Close/Green,Interference,11,Golpear,Almohada
@@ -180,4 +180,4 @@ B4T37,Berto recortó la cerveza.,Filler,None,Preterite_F,Away/Red,Neither,9,,
 B4T38,Parece que Sara está tomando la pelota.,Critical,Toward,SubIndic,Close/Green,Facilitation,15,Tomar,Pelota
 B4T39,Rosa lanzaba el balón.,Critical,Away,Imperfect,Close/Green,Interference,8,Lanzar,Balón
 B4T40,Ángel está jalando la puerta.,Critical,Toward,PresProg,Close/Green,Facilitation,10,Jalar,Puerta
-I11,<instruction slide eleven>,,,,,,,,
+I11,You finished! Congrats!,,,,,,,,
