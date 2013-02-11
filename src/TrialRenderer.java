@@ -93,7 +93,7 @@ public class TrialRenderer extends JPanel{
             int panelWidth = this.getWidth();
             int panelHeight = this.getHeight();
 
-            int fSize = (int) (this.getHeight()/8.0);
+            int fSize = (int) (this.getHeight()/14.0);
             Font exp = new Font("Serif", Font.BOLD, fSize);
             Dimension expSize = getFontDimension(g, exp, sentence);
             g2d.setFont(exp);

@@ -6,53 +6,48 @@ import java.awt.event.ActionListener;
 /**
  * @author Steven MacCoun
  */
-public class MetaCollector extends JPanel{
+public class MetaCollector extends InfoPanel{
 
     private JTextField firstNameField;
     private JTextField lastNameField;
-    private JPanel firstPanel = new JPanel();
-    private JPanel secondPanel = new JPanel();
-    private JLabel firstNameLabel = new JLabel("First name: ");
-    private JLabel lastNameLabel = new JLabel("Last name: ");
     private JButton continueButton = new JButton("Continue");
-    private final Font textFieldFont = new Font("Serif", Font.BOLD | Font.ITALIC, 24);
 
     public MetaCollector(){
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        firstNameField = new JTextField();
-        firstNameField.setPreferredSize(new Dimension(120,25));
-        firstNameField.setFont(textFieldFont);
-        firstNameField.setVisible(true);
+        this.firstNameField = new JTextField("First Name");
+        this.lastNameField = new JTextField("Last Name");
 
-        firstNameLabel.setVisible(true);
-        firstNameLabel.setFont(textFieldFont);
-
-        lastNameField = new JTextField();
-        lastNameField.setPreferredSize(new Dimension(120, 25));
-        lastNameField.setFont(textFieldFont);
-        lastNameField.setVisible(true);
-
-        lastNameLabel.setVisible(true);
-        lastNameLabel.setFont(textFieldFont);
-
-        continueButton.addActionListener(new ActionListener() {
+        this.continueButton = new JButton("Continue");
+        this.continueButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                String subjectName = firstNameField.getText() + "_" + lastNameField.getText();
+                String subjectName = firstNameField.getName() + "_" + lastNameField.getName();
                 Simulator.getInstance().setStudentInfo(subjectName);
                 Simulator.getInstance().executeNextLine();
             }
         });
 
-        firstPanel.add(firstNameLabel);
-        firstPanel.add(firstNameField);
-        this.add(firstPanel);
+        this.add(firstNameField);
+        this.add(lastNameField);
+        this.add(continueButton);
 
-        secondPanel.add(lastNameLabel);
-        secondPanel.add(lastNameField);
-        secondPanel.add(continueButton);
-        this.add(secondPanel);
+    }
+
+    public void paintComponent(Graphics g){
+        super.paintComponent(g);
+
+        int nameFieldWidth = this.getWidth()/4;
+        int nameFieldHeight = this.getHeight()/10;
+        int nameFieldX = this.getWidth()/2 - nameFieldWidth/2;
+
+        int firstNameY = this.getHeight()/2 - nameFieldHeight*2;
+        int lastNameY = this.getHeight()/2 - nameFieldHeight;
+        int continueButtonY = this.getHeight()/2;
+
+        firstNameField.setBounds(nameFieldX, firstNameY, nameFieldWidth, nameFieldHeight);int firstNameWidth = this.getWidth()/4;
+        lastNameField.setBounds(nameFieldX, lastNameY, firstNameWidth, nameFieldHeight);
+        continueButton.setBounds(nameFieldX, continueButtonY, nameFieldWidth, nameFieldHeight);
 
     }
 
