@@ -10,17 +10,21 @@ public class TrialRenderer extends JPanel{
 
     private String sentence;
     private String trialName;
+    private JLabel sentenceLabel;
     private boolean isDisplaySentence;
     private double releasedHTime;
     private boolean hasPressedP;
-    private JButton nextButton = new JButton("Next");
-    private JButton prevButton = new JButton("Prev");
 
     public TrialRenderer(String trialName, String sentence){
 
         this.sentence = sentence;
         this.trialName = trialName;
         this.hasPressedP = false;
+
+        this.sentenceLabel = new JLabel("<html><p>" + sentence + "</p></html>");
+        this.sentenceLabel.setHorizontalAlignment( SwingConstants.CENTER );
+        this.sentenceLabel.setVerticalAlignment(SwingConstants.TOP);
+        this.add(sentenceLabel);
 
         setFocusable(true);
         setLayout(null);
@@ -88,19 +92,12 @@ public class TrialRenderer extends JPanel{
 
         if(this.isDisplaySentence == true){
 
-            Graphics2D g2d = (Graphics2D) g;
-
-            int panelWidth = this.getWidth();
-            int panelHeight = this.getHeight();
-
             int fSize = (int) (this.getHeight()/14.0);
             Font exp = new Font("Serif", Font.BOLD, fSize);
             Dimension expSize = getFontDimension(g, exp, sentence);
-            g2d.setFont(exp);
-            g2d.setPaint(Color.BLACK);
 
-            g2d.drawString(sentence, (panelWidth/2) - (int)(expSize.getWidth()/2),
-                    (panelHeight/2) - (int)(expSize.getHeight()/2));
+            this.sentenceLabel.setFont(exp);
+            this.sentenceLabel.setBounds(0, this.getHeight()/2 - (int)expSize.getHeight(), this.getWidth(), this.getHeight()/2);
 
         }
 
@@ -118,6 +115,13 @@ public class TrialRenderer extends JPanel{
     }
 
     public void displaySentence(boolean shouldDisplay){
+
+        if(shouldDisplay){
+            this.add(this.sentenceLabel);
+        } else{
+            this.remove(this.sentenceLabel);
+        }
+
         this.isDisplaySentence = shouldDisplay;
         repaint();
     }
