@@ -3,4 +3,7 @@ color/
 out/production/
 out/tests/
 Subjects/
+*.csv#
+src/.~lock.experiment_layout_1.csv#
 *.csv
+
