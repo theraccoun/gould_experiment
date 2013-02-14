@@ -112,8 +112,11 @@ public class Simulator extends JFrame{
 
     public void runTrial(TrialRenderer trenderer){
         getContentPane().removeAll();
+        setBackground(Color.BLACK);
+        validate();
         add(trenderer);
         trenderer.requestFocusInWindow();
+        setBackground(Color.white);
         validate();
 
     }
