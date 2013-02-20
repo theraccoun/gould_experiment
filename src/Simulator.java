@@ -31,6 +31,9 @@ public class Simulator extends JFrame{
     }
 
     private Simulator(){
+
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        System.out.println("JAVA VERSION:::  " + System.getProperty("java.version"));
     }
 
     public void initialize(){
@@ -53,10 +56,14 @@ public class Simulator extends JFrame{
                 System.out.println(" ");
                 allLines.add(nextLine);
             }
+
+            reader.close();
+
         } catch (IOException e) {
             System.out.println("Could not read line in file");
             e.printStackTrace();
         }
+
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setExtendedState(Frame.MAXIMIZED_BOTH);
@@ -155,7 +162,6 @@ public class Simulator extends JFrame{
         try {
             String trialInfo = (t.getTrialName() + ',' + t.getReactionTime() + ',' + t.getKeyPressed());
             String[] commaDelimTrialInfo = trialInfo.split(",");
-            System.out.println("WRITING: " + commaDelimTrialInfo);
             resultsWriter.writeNext(commaDelimTrialInfo);
             resultsWriter.flush();
             executeNextLine();

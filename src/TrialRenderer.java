@@ -66,7 +66,7 @@ public class TrialRenderer extends JPanel{
             public void actionPerformed(ActionEvent e) {
                 if(hasPressedP){
                     double reactTime = (double)System.currentTimeMillis() - releasedHTime;
-                    writeTrialInfoToFile(reactTime, "1");
+                    writeTrialInfoToFile(reactTime, "0");
                 }
 
             }
@@ -76,7 +76,7 @@ public class TrialRenderer extends JPanel{
             public void actionPerformed(ActionEvent e) {
                 if(hasPressedP){
                     double reactTime = (double)System.currentTimeMillis() - releasedHTime;
-                    writeTrialInfoToFile(reactTime, "0");
+                    writeTrialInfoToFile(reactTime, "1");
                 }
             }
         });
