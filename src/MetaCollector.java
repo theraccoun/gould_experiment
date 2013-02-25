@@ -8,28 +8,25 @@ import java.awt.event.ActionListener;
  */
 public class MetaCollector extends InfoPanel{
 
-    private JTextField firstNameField;
-    private JTextField lastNameField;
+    private JTextField subjectNumber;
     private JButton continueButton = new JButton("Continue");
 
     public MetaCollector(){
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        this.firstNameField = new JTextField("First Name");
-        this.lastNameField = new JTextField("Last Name");
+        this.subjectNumber = new JTextField("Subject Number");
 
         this.continueButton = new JButton("Continue");
         this.continueButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                String subjectName = firstNameField.getText() + "_" + lastNameField.getText();
+                String subjectName = subjectNumber.getText();
                 Simulator.getInstance().setStudentInfo(subjectName);
                 Simulator.getInstance().executeNextLine();
             }
         });
 
-        this.add(firstNameField);
-        this.add(lastNameField);
+        this.add(subjectNumber);
         this.add(continueButton);
 
     }
@@ -42,11 +39,9 @@ public class MetaCollector extends InfoPanel{
         int nameFieldX = this.getWidth()/2 - nameFieldWidth/2;
 
         int firstNameY = this.getHeight()/2 - nameFieldHeight*2;
-        int lastNameY = this.getHeight()/2 - nameFieldHeight;
         int continueButtonY = this.getHeight()/2;
 
-        firstNameField.setBounds(nameFieldX, firstNameY, nameFieldWidth, nameFieldHeight);int firstNameWidth = this.getWidth()/4;
-        lastNameField.setBounds(nameFieldX, lastNameY, firstNameWidth, nameFieldHeight);
+        subjectNumber.setBounds(nameFieldX, firstNameY, nameFieldWidth, nameFieldHeight);int firstNameWidth = this.getWidth()/4;
         continueButton.setBounds(nameFieldX, continueButtonY, nameFieldWidth, nameFieldHeight);
 
     }
