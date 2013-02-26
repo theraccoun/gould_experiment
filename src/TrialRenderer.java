@@ -40,10 +40,11 @@ public class TrialRenderer extends JPanel{
         InputMap im = getInputMap(WHEN_IN_FOCUSED_WINDOW);
         ActionMap am = getActionMap();
 
-        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_8, 0), "8");
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_NUMPAD8, 0), "8");
         im.put(KeyStroke.getKeyStroke(KeyEvent.VK_Q, 0), "Q");
         im.put(KeyStroke.getKeyStroke(KeyEvent.VK_P, 0, true), "released_p");
         im.put(KeyStroke.getKeyStroke(KeyEvent.VK_P, 0, false), "pressed_p");
+
         am.put("released_p", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
