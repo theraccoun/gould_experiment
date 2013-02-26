@@ -50,6 +50,7 @@ public class InstructionPanel extends InfoPanel {
         setKeyBindings();
     }
 
+
     private void setKeyBindings(){
         InputMap im = getInputMap(WHEN_IN_FOCUSED_WINDOW);
         ActionMap am = getActionMap();
@@ -70,7 +71,7 @@ public class InstructionPanel extends InfoPanel {
         Graphics2D g2d = (Graphics2D) g;
 
         int fSize = (int) (padD.getHeight()/12.5);
-        this.instructionFont = new Font("Serif", Font.BOLD | Font.ITALIC, fSize);
+        this.instructionFont = new Font("Serif", Font.PLAIN, fSize);
         g2d.setFont(instructionFont);
         g2d.setPaint(Color.BLACK);
 
