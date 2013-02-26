@@ -1,7 +1,7 @@
 Slide Name,Slide Text,Type,Direction,Features,Expected Response,Expected Effect,Syllables,Verb,Object
 meta,,,,,,,,,
 I1,First please speak <i>with</i> your <span color="red">instructor</span> about <b>what</b> to do <br><br> Donde estas la biblioteca,,,,,,,,
-I2,Instruction slide <span color="green">two</span> <br><br><br> <b>yo quiero taco bell! </b>,,,,,,,,
+I2,Instruction slide <span color="green">two</span> <br><br><br> <hr><b>yo quiero taco bell! </b></hr>,,,,,,,,
 I3,instruction slide three,,,,,,,,
 I4,Begin with these practice trials,,,,,,,,
 P1T1,Jorge está comprando la comida.,Practice,,,,,,,
