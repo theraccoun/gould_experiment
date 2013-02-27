@@ -1,29 +1,40 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * @author Steven MacCoun
  */
-public class InstructionPanel extends InfoPanel {
+public class InstructionPanel extends JPanel{
 
-    private String instructionText;
-    private JLabel instructionLabel;
-    private Font instructionFont;
+    private JLabel instructions;
     private JButton nextButton;
     private JButton prevButton;
 
 
-    public InstructionPanel(String text ) {
+    public InstructionPanel(String imgPath) {
 
         this.setLayout(null);
 
-        this.instructionText = "<html><p>" + text + "</p><html>";
-        this.instructionLabel = new JLabel(instructionText);
-        this.instructionLabel.setHorizontalAlignment( SwingConstants.CENTER );
-        this.add(instructionLabel);
+        try {
+            InputStream is = ClassLoader.getSystemResourceAsStream(imgPath);
+            BufferedImage bi  = ImageIO.read(is);
+            this.instructions = new JLabel(new ImageIcon(bi));
+            this.instructions.setPreferredSize(new Dimension(this.getWidth(), this.getHeight()));
+            this.add(instructions);
+        } catch (IOException ex) {
+            System.out.println("Unable to load instruction image " + imgPath);
+            ex.printStackTrace();
+        }
+
+
 
         this.nextButton = new JButton("Next");
         this.nextButton.setVisible(true);
@@ -65,44 +76,24 @@ public class InstructionPanel extends InfoPanel {
         });
     }
 
-    public void paintComponent(Graphics g)
-    {
-        super.paintComponent(g);
-        Graphics2D g2d = (Graphics2D) g;
-
-        int fSize = (int) (padD.getHeight()/12.5);
-        this.instructionFont = new Font("Serif", Font.PLAIN, fSize);
-        g2d.setFont(instructionFont);
-        g2d.setPaint(Color.BLACK);
-
-        instructionLabel.setFont(instructionFont);
-        int textX = (int)(panelP1X + borderThickness);
-        int textY = this.getHeight()/4;
-        int textWidth = (int)(padD.getWidth() - borderThickness);
-        int textHeight;
-        // Heights less than twenty cause matrix inversion issues
-        if(panelD.getHeight() > 20)
-            textHeight = (int)(panelD.getHeight()/2.0);
-        else
-            textHeight = 30;
-
-        instructionLabel.setBounds(textX, textY, textWidth, textHeight);
-
-        setButtonPositions();
-    }
+//    public void paintComponent(Graphics g)
+//    {
+//        super.paintComponent(g);
+//        setButtonPositions();
+//    }
 
 
-    private void setButtonPositions(){
-
-        int buttonWidth = (int)(padD.getWidth()*0.2);
-        int buttonHeight = (int)(padD.getHeight()*0.1);
-        int buttonY = (int)(panelP2Y + borderThickness/2) - 10;
-
-        int nButton1X = (int)(panelP2X) - 10;
-        nextButton.setBounds(nButton1X, buttonY, buttonWidth, buttonHeight);
-
-        int pButton1X = (int)(panelP1X + borderThickness/2) + 10;
-        prevButton.setBounds(pButton1X, buttonY, buttonWidth, buttonHeight);
-    }
+//    private void setButtonPositions(){
+//
+//        int buttonWidth = (int)(padD.getWidth()*0.2);
+//        int buttonHeight = (int)(padD.getHeight()*0.1);
+//        int buttonY = (int)(panelP2Y + borderThickness/2) - 10;
+//
+//        int nButton1X = (int)(panelP2X) - 10;
+//        nextButton.setBounds(nButton1X, buttonY, buttonWidth, buttonHeight);
+//
+//        int pButton1X = (int)(panelP1X + borderThickness/2) + 10;
+//        prevButton.setBounds(pButton1X, buttonY, buttonWidth, buttonHeight);
+//    }
 
 }
