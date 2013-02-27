@@ -95,7 +95,7 @@ public class Simulator extends JFrame{
                 TrialRenderer tr = new TrialRenderer(curRow[0], curRow[1]);
                 runTrial(tr);
             }
-            else if(eType.matches("I[0-9]")){
+            else if(eType.matches("I[0-9]*")){
                 InstructionPanel ip = new InstructionPanel(curRow[1]);
                 runInstruction(ip);
             }
